@@ -151,12 +151,6 @@
       "config": "node_modules/@solidoc/iffe-cli/configs/cz-customizable.js"
     }
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint --config node_modules/@solidoc/iffe-cli/configs/commitlint.js --env HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "./packages/**/src/**": "yarn fix"
   },
