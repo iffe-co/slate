@@ -1,4 +1,4 @@
-import { Range } from 'slate'
+import { Range } from '@solidoc/slate';
 
 export const input = {
   anchor: {
@@ -9,8 +9,8 @@ export const input = {
     path: [0],
     offset: 0,
   },
-}
+};
 export const test = range => {
-  return Range.isForward(range)
-}
-export const output = false
+  return Range.isForward(range);
+};
+export const output = false;

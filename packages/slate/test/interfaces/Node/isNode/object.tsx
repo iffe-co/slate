@@ -1,7 +1,7 @@
-import { Node } from 'slate'
+import { Node } from '@solidoc/slate';
 
-export const input = {}
+export const input = {};
 export const test = value => {
-  return Node.isNode(value)
-}
-export const output = false
+  return Node.isNode(value);
+};
+export const output = false;

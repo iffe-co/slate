@@ -1,6 +1,5 @@
-import { Editor, Operation, Path } from 'slate'
-
-import { HistoryEditor } from './history-editor'
+import { Editor, Operation, Path } from '@solidoc/slate';
+import { HistoryEditor } from './history-editor';
 
 /**
  * The `withHistory` plugin keeps track of the operation history of a Slate
@@ -8,110 +7,106 @@ import { HistoryEditor } from './history-editor'
  */
 
 export const withHistory = <T extends Editor>(editor: T) => {
-  const e = editor as T & HistoryEditor
-  const { apply } = e
-  e.history = { undos: [], redos: [] }
+  const e = editor as T & HistoryEditor;
+  const { apply } = e;
+  e.history = { undos: [], redos: [] };
 
   e.redo = () => {
-    const { history } = e
-    const { redos } = history
+    const { history } = e;
+    const { redos } = history;
 
     if (redos.length > 0) {
-      const batch = redos[redos.length - 1]
+      const batch = redos[redos.length - 1];
 
       HistoryEditor.withoutSaving(e, () => {
         Editor.withoutNormalizing(e, () => {
           for (const op of batch) {
-            e.apply(op)
+            e.apply(op);
           }
-        })
-      })
+        });
+      });
 
-      history.redos.pop()
-      history.undos.push(batch)
+      history.redos.pop();
+      history.undos.push(batch);
     }
-  }
+  };
 
   e.undo = () => {
-    const { history } = e
-    const { undos } = history
+    const { history } = e;
+    const { undos } = history;
 
     if (undos.length > 0) {
-      const batch = undos[undos.length - 1]
+      const batch = undos[undos.length - 1];
 
       HistoryEditor.withoutSaving(e, () => {
         Editor.withoutNormalizing(e, () => {
-          const inverseOps = batch.map(Operation.inverse).reverse()
+          const inverseOps = batch.map(Operation.inverse).reverse();
 
           for (const op of inverseOps) {
             // If the final operation is deselecting the editor, skip it. This is
-            if (
-              op === inverseOps[inverseOps.length - 1] &&
-              op.type === 'set_selection' &&
-              op.newProperties == null
-            ) {
-              continue
+            if (op === inverseOps[inverseOps.length - 1] && op.type === 'set_selection' && op.newProperties == null) {
+              continue;
             } else {
-              e.apply(op)
+              e.apply(op);
             }
           }
-        })
-      })
+        });
+      });
 
-      history.redos.push(batch)
-      history.undos.pop()
+      history.redos.push(batch);
+      history.undos.pop();
     }
-  }
+  };
 
   e.apply = (op: Operation) => {
-    const { operations, history } = e
-    const { undos } = history
-    const lastBatch = undos[undos.length - 1]
-    const lastOp = lastBatch && lastBatch[lastBatch.length - 1]
-    const overwrite = shouldOverwrite(op, lastOp)
-    let save = HistoryEditor.isSaving(e)
-    let merge = HistoryEditor.isMerging(e)
+    const { operations, history } = e;
+    const { undos } = history;
+    const lastBatch = undos[undos.length - 1];
+    const lastOp = lastBatch && lastBatch[lastBatch.length - 1];
+    const overwrite = shouldOverwrite(op, lastOp);
+    let save = HistoryEditor.isSaving(e);
+    let merge = HistoryEditor.isMerging(e);
 
     if (save == null) {
-      save = shouldSave(op, lastOp)
+      save = shouldSave(op, lastOp);
     }
 
     if (save) {
       if (merge == null) {
         if (lastBatch == null) {
-          merge = false
+          merge = false;
         } else if (operations.length !== 0) {
-          merge = true
+          merge = true;
         } else {
-          merge = shouldMerge(op, lastOp) || overwrite
+          merge = shouldMerge(op, lastOp) || overwrite;
         }
       }
 
       if (lastBatch && merge) {
         if (overwrite) {
-          lastBatch.pop()
+          lastBatch.pop();
         }
 
-        lastBatch.push(op)
+        lastBatch.push(op);
       } else {
-        const batch = [op]
-        undos.push(batch)
+        const batch = [op];
+        undos.push(batch);
       }
 
       while (undos.length > 100) {
-        undos.shift()
+        undos.shift();
       }
 
       if (shouldClear(op)) {
-        history.redos = []
+        history.redos = [];
       }
     }
 
-    apply(op)
-  }
+    apply(op);
+  };
 
-  return e
-}
+  return e;
+};
 
 /**
  * Check whether to merge an operation into the previous operation.
@@ -119,7 +114,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
 
 const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
   if (op.type === 'set_selection') {
-    return true
+    return true;
   }
 
   if (
@@ -129,7 +124,7 @@ const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
     op.offset === prev.offset + prev.text.length &&
     Path.equals(op.path, prev.path)
   ) {
-    return true
+    return true;
   }
 
   if (
@@ -139,11 +134,11 @@ const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
     op.offset + op.text.length === prev.offset &&
     Path.equals(op.path, prev.path)
   ) {
-    return true
+    return true;
   }
 
-  return false
-}
+  return false;
+};
 
 /**
  * Check whether an operation needs to be saved to the history.
@@ -151,26 +146,23 @@ const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
 
 const shouldSave = (op: Operation, prev: Operation | undefined): boolean => {
   if (op.type === 'set_selection' && op.newProperties == null) {
-    return false
+    return false;
   }
 
-  return true
-}
+  return true;
+};
 
 /**
  * Check whether an operation should overwrite the previous one.
  */
 
-const shouldOverwrite = (
-  op: Operation,
-  prev: Operation | undefined
-): boolean => {
+const shouldOverwrite = (op: Operation, prev: Operation | undefined): boolean => {
   if (prev && op.type === 'set_selection' && prev.type === 'set_selection') {
-    return true
+    return true;
   }
 
-  return false
-}
+  return false;
+};
 
 /**
  * Check whether an operation should clear the redos stack.
@@ -178,8 +170,8 @@ const shouldOverwrite = (
 
 const shouldClear = (op: Operation): boolean => {
   if (op.type === 'set_selection') {
-    return false
+    return false;
   }
 
-  return true
-}
+  return true;
+};

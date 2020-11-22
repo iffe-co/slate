@@ -1,9 +1,9 @@
 {
-  "extends": "../../config/typescript/tsconfig.json",
+  "extends": "../../scripts/tsconfig.json",
+  "include": ["src/**/*"],
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./lib",
-    "composite": true
+    "outDir": "./lib"
   },
   "references": []
 }

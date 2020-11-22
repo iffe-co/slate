@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { Transforms } from 'slate'
-import { jsx } from '../../..'
+import { Transforms } from '@solidoc/slate';
+import { jsx } from '../../..';
 
 export const run = editor => {
   Transforms.insertFragment(
@@ -16,9 +16,9 @@ export const run = editor => {
           </block>
         </block>
       </block>
-    </block>
-  )
-}
+    </block>,
+  );
+};
 export const input = (
   <editor>
     <block>
@@ -38,7 +38,7 @@ export const input = (
       </block>
     </block>
   </editor>
-)
+);
 // TODO: surely this is the wrong behavior.
 // ideally, paragraph with "2" goes into second cell
 export const output = (
@@ -63,5 +63,5 @@ export const output = (
       </block>
     </block>
   </editor>
-)
-export const skip = true
+);
+export const skip = true;

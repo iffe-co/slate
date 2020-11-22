@@ -1,6 +1,6 @@
 /** @jsx jsx  */
-import { Node } from 'slate'
-import { jsx } from 'slate-hyperscript'
+import { Node } from '@solidoc/slate';
+import { jsx } from '@solidoc/slate-hyperscript';
 
 export const input = (
   <editor>
@@ -10,10 +10,10 @@ export const input = (
       </element>
     </element>
   </editor>
-)
+);
 export const test = value => {
-  return Array.from(Node.nodes(value, { pass: ([n, p]) => p.length > 1 }))
-}
+  return Array.from(Node.nodes(value, { pass: ([n, p]) => p.length > 1 }));
+};
 export const output = [
   [input, []],
   [
@@ -30,4 +30,4 @@ export const output = [
     </element>,
     [0, 0],
   ],
-]
+];

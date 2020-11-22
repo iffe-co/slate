@@ -1,7 +1,7 @@
-import { Range } from 'slate'
+import { Range } from '@solidoc/slate';
 
-export const input = true
+export const input = true;
 export const test = value => {
-  return Range.isRange(value)
-}
-export const output = false
+  return Range.isRange(value);
+};
+export const output = false;

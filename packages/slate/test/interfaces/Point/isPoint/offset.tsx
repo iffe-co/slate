@@ -1,7 +1,7 @@
-import { Point } from 'slate'
+import { Point } from '@solidoc/slate';
 
-export const input = 42
+export const input = 42;
 export const test = value => {
-  return Point.isPoint(value)
-}
-export const output = false
+  return Point.isPoint(value);
+};
+export const output = false;

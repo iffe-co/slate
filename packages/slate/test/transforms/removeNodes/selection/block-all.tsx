@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { Transforms } from 'slate'
-import { jsx } from '../../..'
+import { Transforms } from '@solidoc/slate';
+import { jsx } from '../../..';
 
 export const input = (
   <editor>
@@ -13,8 +13,8 @@ export const input = (
       wo
     </block>
   </editor>
-)
+);
 export const run = editor => {
-  Transforms.removeNodes(editor)
-}
-export const output = <editor />
+  Transforms.removeNodes(editor);
+};
+export const output = <editor />;

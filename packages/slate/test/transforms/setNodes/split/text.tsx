@@ -1,14 +1,10 @@
 /** @jsx jsx */
-import { Transforms, Text } from 'slate'
-import { jsx } from '../../..'
+import { Transforms, Text } from '@solidoc/slate';
+import { jsx } from '../../..';
 
 export const run = editor => {
-  Transforms.setNodes(
-    editor,
-    { key: true },
-    { match: Text.isText, split: true }
-  )
-}
+  Transforms.setNodes(editor, { key: true }, { match: Text.isText, split: true });
+};
 export const input = (
   <editor>
     <block>
@@ -17,7 +13,7 @@ export const input = (
       <focus />d
     </block>
   </editor>
-)
+);
 export const output = (
   <editor>
     <block>
@@ -30,4 +26,4 @@ export const output = (
       <text>d</text>
     </block>
   </editor>
-)
+);

@@ -1,4 +1,4 @@
-import { Operation, Path } from '..'
+import { Operation, Path } from '..';
 
 /**
  * `PathRef` objects keep a specific path in a document synced over time as new
@@ -7,9 +7,9 @@ import { Operation, Path } from '..'
  */
 
 export interface PathRef {
-  current: Path | null
-  affinity: 'forward' | 'backward' | null
-  unref(): Path | null
+  current: Path | null;
+  affinity: 'forward' | 'backward' | null;
+  unref: () => Path | null;
 }
 
 export const PathRef = {
@@ -18,17 +18,17 @@ export const PathRef = {
    */
 
   transform(ref: PathRef, op: Operation): void {
-    const { current, affinity } = ref
+    const { current, affinity } = ref;
 
     if (current == null) {
-      return
+      return;
     }
 
-    const path = Path.transform(current, op, { affinity })
-    ref.current = path
+    const path = Path.transform(current, op, { affinity });
+    ref.current = path;
 
     if (path == null) {
-      ref.unref()
+      ref.unref();
     }
   },
-}
+};

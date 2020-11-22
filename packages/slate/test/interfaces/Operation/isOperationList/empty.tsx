@@ -1,7 +1,7 @@
-import { Operation } from 'slate'
+import { Operation } from '@solidoc/slate';
 
-export const input = []
+export const input = [];
 export const test = value => {
-  return Operation.isOperationList(value)
-}
-export const output = true
+  return Operation.isOperationList(value);
+};
+export const output = true;

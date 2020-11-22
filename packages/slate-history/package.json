@@ -1,40 +1,20 @@
 {
-  "name": "slate-history",
-  "description": "An operation-based history implementation for Slate editors.",
-  "version": "0.59.0",
-  "license": "MIT",
-  "repository": "git://github.com/ianstormtaylor/slate.git",
-  "main": "dist/index.js",
+  "name": "@solidoc/slate-history",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.es.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
-  "umd": "dist/slate-history.js",
-  "umdMin": "dist/slate-history.min.js",
-  "sideEffects": false,
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "files": [
-    "dist/"
+    "dist"
   ],
-  "dependencies": {
-    "immer": "^5.0.0",
-    "is-plain-object": "^3.0.0"
-  },
-  "devDependencies": {
-    "slate": "^0.59.0",
-    "slate-hyperscript": "^0.59.0"
-  },
-  "peerDependencies": {
-    "slate": ">=0.55.0"
-  },
-  "umdGlobals": {
-    "slate": "Slate"
-  },
-  "keywords": [
-    "editor",
-    "history",
-    "operation",
-    "redo",
-    "save",
-    "slate",
-    "stack",
-    "undo"
-  ]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solidoc/iffe-react.git"
+  }
 }

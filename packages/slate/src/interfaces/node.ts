@@ -1,12 +1,12 @@
-import { produce } from 'immer'
-import { Editor, Element, ElementEntry, Path, Range, Text } from '..'
+import { produce } from 'immer';
+import { Editor, Element, ElementEntry, Path, Range, Text } from '..';
 
 /**
  * The `Node` union type represents all of the different types of nodes that
  * occur in a Slate document tree.
  */
 
-export type Node = Editor | Element | Text
+export type Node = Editor | Element | Text;
 
 export const Node = {
   /**
@@ -14,15 +14,15 @@ export const Node = {
    */
 
   ancestor(root: Node, path: Path): Ancestor {
-    const node = Node.get(root, path)
+    const node = Node.get(root, path);
 
     if (Text.isText(node)) {
       throw new Error(
-        `Cannot get the ancestor node at path [${path}] because it refers to a text node instead: ${node}`
-      )
+        `Cannot get the ancestor node at path [${path}] because it refers to a text node instead: ${node}`,
+      );
     }
 
-    return node
+    return node;
   },
 
   /**
@@ -36,13 +36,13 @@ export const Node = {
     root: Node,
     path: Path,
     options: {
-      reverse?: boolean
-    } = {}
+      reverse?: boolean;
+    } = {},
   ): Generator<NodeEntry<Ancestor>, void, undefined> {
     for (const p of Path.ancestors(path, options)) {
-      const n = Node.ancestor(root, p)
-      const entry: NodeEntry<Ancestor> = [n, p]
-      yield entry
+      const n = Node.ancestor(root, p);
+      const entry: NodeEntry<Ancestor> = [n, p];
+      yield entry;
     }
   },
 
@@ -52,22 +52,16 @@ export const Node = {
 
   child(root: Node, index: number): Descendant {
     if (Text.isText(root)) {
-      throw new Error(
-        `Cannot get the child of a text node: ${JSON.stringify(root)}`
-      )
+      throw new Error(`Cannot get the child of a text node: ${JSON.stringify(root)}`);
     }
 
-    const c = root.children[index] as Descendant
+    const c = root.children[index] as Descendant;
 
     if (c == null) {
-      throw new Error(
-        `Cannot get child at index \`${index}\` in node: ${JSON.stringify(
-          root
-        )}`
-      )
+      throw new Error(`Cannot get child at index \`${index}\` in node: ${JSON.stringify(root)}`);
     }
 
-    return c
+    return c;
   },
 
   /**
@@ -78,19 +72,19 @@ export const Node = {
     root: Node,
     path: Path,
     options: {
-      reverse?: boolean
-    } = {}
+      reverse?: boolean;
+    } = {},
   ): Generator<NodeEntry<Descendant>, void, undefined> {
-    const { reverse = false } = options
-    const ancestor = Node.ancestor(root, path)
-    const { children } = ancestor
-    let index = reverse ? children.length - 1 : 0
+    const { reverse = false } = options;
+    const ancestor = Node.ancestor(root, path);
+    const { children } = ancestor;
+    let index = reverse ? children.length - 1 : 0;
 
     while (reverse ? index >= 0 : index < children.length) {
-      const child = Node.child(ancestor, index)
-      const childPath = path.concat(index)
-      yield [child, childPath]
-      index = reverse ? index - 1 : index + 1
+      const child = Node.child(ancestor, index);
+      const childPath = path.concat(index);
+      yield [child, childPath];
+      index = reverse ? index - 1 : index + 1;
     }
   },
 
@@ -99,9 +93,9 @@ export const Node = {
    */
 
   common(root: Node, path: Path, another: Path): NodeEntry {
-    const p = Path.common(path, another)
-    const n = Node.get(root, p)
-    return [n, p]
+    const p = Path.common(path, another);
+    const n = Node.get(root, p);
+    return [n, p];
   },
 
   /**
@@ -109,15 +103,15 @@ export const Node = {
    */
 
   descendant(root: Node, path: Path): Descendant {
-    const node = Node.get(root, path)
+    const node = Node.get(root, path);
 
     if (Editor.isEditor(node)) {
       throw new Error(
-        `Cannot get the descendant node at path [${path}] because it refers to the root editor node instead: ${node}`
-      )
+        `Cannot get the descendant node at path [${path}] because it refers to the root editor node instead: ${node}`,
+      );
     }
 
-    return node
+    return node;
   },
 
   /**
@@ -127,17 +121,17 @@ export const Node = {
   *descendants(
     root: Node,
     options: {
-      from?: Path
-      to?: Path
-      reverse?: boolean
-      pass?: (node: NodeEntry) => boolean
-    } = {}
+      from?: Path;
+      to?: Path;
+      reverse?: boolean;
+      pass?: (node: NodeEntry) => boolean;
+    } = {},
   ): Generator<NodeEntry<Descendant>, void, undefined> {
     for (const [node, path] of Node.nodes(root, options)) {
       if (path.length !== 0) {
         // NOTE: we have to coerce here because checking the path's length does
         // guarantee that `node` is not a `Editor`, but TypeScript doesn't know.
-        yield [node, path] as NodeEntry<Descendant>
+        yield [node, path] as NodeEntry<Descendant>;
       }
     }
   },
@@ -151,15 +145,15 @@ export const Node = {
   *elements(
     root: Node,
     options: {
-      from?: Path
-      to?: Path
-      reverse?: boolean
-      pass?: (node: NodeEntry) => boolean
-    } = {}
+      from?: Path;
+      to?: Path;
+      reverse?: boolean;
+      pass?: (node: NodeEntry) => boolean;
+    } = {},
   ): Generator<ElementEntry, void, undefined> {
     for (const [node, path] of Node.nodes(root, options)) {
       if (Element.isElement(node)) {
-        yield [node, path]
+        yield [node, path];
       }
     }
   },
@@ -169,19 +163,19 @@ export const Node = {
    */
 
   first(root: Node, path: Path): NodeEntry {
-    const p = path.slice()
-    let n = Node.get(root, p)
+    const p = path.slice();
+    let n = Node.get(root, p);
 
     while (n) {
       if (Text.isText(n) || n.children.length === 0) {
-        break
+        break;
       } else {
-        n = n.children[0]
-        p.push(0)
+        n = n.children[0];
+        p.push(0);
       }
     }
 
-    return [n, p]
+    return [n, p];
   },
 
   /**
@@ -190,42 +184,38 @@ export const Node = {
 
   fragment(root: Node, range: Range): Descendant[] {
     if (Text.isText(root)) {
-      throw new Error(
-        `Cannot get a fragment starting from a root text node: ${JSON.stringify(
-          root
-        )}`
-      )
+      throw new Error(`Cannot get a fragment starting from a root text node: ${JSON.stringify(root)}`);
     }
 
     const newRoot = produce(root, r => {
-      const [start, end] = Range.edges(range)
+      const [start, end] = Range.edges(range);
       const nodeEntries = Node.nodes(r, {
         reverse: true,
         pass: ([, path]) => !Range.includes(range, path),
-      })
+      });
 
       for (const [, path] of nodeEntries) {
         if (!Range.includes(range, path)) {
-          const parent = Node.parent(r, path)
-          const index = path[path.length - 1]
-          parent.children.splice(index, 1)
+          const parent = Node.parent(r, path);
+          const index = path[path.length - 1];
+          parent.children.splice(index, 1);
         }
 
         if (Path.equals(path, end.path)) {
-          const leaf = Node.leaf(r, path)
-          leaf.text = leaf.text.slice(0, end.offset)
+          const leaf = Node.leaf(r, path);
+          leaf.text = leaf.text.slice(0, end.offset);
         }
 
         if (Path.equals(path, start.path)) {
-          const leaf = Node.leaf(r, path)
-          leaf.text = leaf.text.slice(start.offset)
+          const leaf = Node.leaf(r, path);
+          leaf.text = leaf.text.slice(start.offset);
         }
       }
 
-      delete r.selection
-    })
+      delete r.selection;
+    });
 
-    return newRoot.children
+    return newRoot.children;
   },
 
   /**
@@ -234,23 +224,19 @@ export const Node = {
    */
 
   get(root: Node, path: Path): Node {
-    let node = root
+    let node = root;
 
     for (let i = 0; i < path.length; i++) {
-      const p = path[i]
+      const p = path[i];
 
       if (Text.isText(node) || !node.children[p]) {
-        throw new Error(
-          `Cannot find a descendant at path [${path}] in node: ${JSON.stringify(
-            root
-          )}`
-        )
+        throw new Error(`Cannot find a descendant at path [${path}] in node: ${JSON.stringify(root)}`);
       }
 
-      node = node.children[p]
+      node = node.children[p];
     }
 
-    return node
+    return node;
   },
 
   /**
@@ -258,19 +244,19 @@ export const Node = {
    */
 
   has(root: Node, path: Path): boolean {
-    let node = root
+    let node = root;
 
     for (let i = 0; i < path.length; i++) {
-      const p = path[i]
+      const p = path[i];
 
       if (Text.isText(node) || !node.children[p]) {
-        return false
+        return false;
       }
 
-      node = node.children[p]
+      node = node.children[p];
     }
 
-    return true
+    return true;
   },
 
   /**
@@ -278,9 +264,7 @@ export const Node = {
    */
 
   isNode(value: any): value is Node {
-    return (
-      Text.isText(value) || Element.isElement(value) || Editor.isEditor(value)
-    )
+    return Text.isText(value) || Element.isElement(value) || Editor.isEditor(value);
   },
 
   /**
@@ -288,7 +272,7 @@ export const Node = {
    */
 
   isNodeList(value: any): value is Node[] {
-    return Array.isArray(value) && (value.length === 0 || Node.isNode(value[0]))
+    return Array.isArray(value) && (value.length === 0 || Node.isNode(value[0]));
   },
 
   /**
@@ -296,20 +280,20 @@ export const Node = {
    */
 
   last(root: Node, path: Path): NodeEntry {
-    const p = path.slice()
-    let n = Node.get(root, p)
+    const p = path.slice();
+    let n = Node.get(root, p);
 
     while (n) {
       if (Text.isText(n) || n.children.length === 0) {
-        break
+        break;
       } else {
-        const i = n.children.length - 1
-        n = n.children[i]
-        p.push(i)
+        const i = n.children.length - 1;
+        n = n.children[i];
+        p.push(i);
       }
     }
 
-    return [n, p]
+    return [n, p];
   },
 
   /**
@@ -317,15 +301,13 @@ export const Node = {
    */
 
   leaf(root: Node, path: Path): Text {
-    const node = Node.get(root, path)
+    const node = Node.get(root, path);
 
     if (!Text.isText(node)) {
-      throw new Error(
-        `Cannot get the leaf node at path [${path}] because it refers to a non-leaf node: ${node}`
-      )
+      throw new Error(`Cannot get the leaf node at path [${path}] because it refers to a non-leaf node: ${node}`);
     }
 
-    return node
+    return node;
   },
 
   /**
@@ -339,12 +321,12 @@ export const Node = {
     root: Node,
     path: Path,
     options: {
-      reverse?: boolean
-    } = {}
+      reverse?: boolean;
+    } = {},
   ): Generator<NodeEntry, void, undefined> {
     for (const p of Path.levels(path, options)) {
-      const n = Node.get(root, p)
-      yield [n, p]
+      const n = Node.get(root, p);
+      yield [n, p];
     }
   },
 
@@ -354,9 +336,8 @@ export const Node = {
 
   matches(node: Node, props: Partial<Node>): boolean {
     return (
-      (Element.isElement(node) && Element.matches(node, props)) ||
-      (Text.isText(node) && Text.matches(node, props))
-    )
+      (Element.isElement(node) && Element.matches(node, props)) || (Text.isText(node) && Text.matches(node, props))
+    );
   },
 
   /**
@@ -368,74 +349,69 @@ export const Node = {
   *nodes(
     root: Node,
     options: {
-      from?: Path
-      to?: Path
-      reverse?: boolean
-      pass?: (entry: NodeEntry) => boolean
-    } = {}
+      from?: Path;
+      to?: Path;
+      reverse?: boolean;
+      pass?: (entry: NodeEntry) => boolean;
+    } = {},
   ): Generator<NodeEntry, void, undefined> {
-    const { pass, reverse = false } = options
-    const { from = [], to } = options
-    const visited = new Set()
-    let p: Path = []
-    let n = root
+    const { pass, reverse = false } = options;
+    const { from = [], to } = options;
+    const visited = new Set();
+    let p: Path = [];
+    let n = root;
 
     while (true) {
       if (to && (reverse ? Path.isBefore(p, to) : Path.isAfter(p, to))) {
-        break
+        break;
       }
 
       if (!visited.has(n)) {
-        yield [n, p]
+        yield [n, p];
       }
 
       // If we're allowed to go downward and we haven't decsended yet, do.
-      if (
-        !visited.has(n) &&
-        !Text.isText(n) &&
-        n.children.length !== 0 &&
-        (pass == null || pass([n, p]) === false)
-      ) {
-        visited.add(n)
-        let nextIndex = reverse ? n.children.length - 1 : 0
+      if (!visited.has(n) && !Text.isText(n) && n.children.length !== 0 && (pass == null || pass([n, p]) === false)) {
+        visited.add(n);
+        let nextIndex = reverse ? n.children.length - 1 : 0;
 
         if (Path.isAncestor(p, from)) {
-          nextIndex = from[p.length]
+          nextIndex = from[p.length];
         }
 
-        p = p.concat(nextIndex)
-        n = Node.get(root, p)
-        continue
+        p = p.concat(nextIndex);
+        n = Node.get(root, p);
+        continue;
       }
 
       // If we're at the root and we can't go down, we're done.
       if (p.length === 0) {
-        break
+        break;
       }
 
       // If we're going forward...
       if (!reverse) {
-        const newPath = Path.next(p)
+        const newPath = Path.next(p);
 
         if (Node.has(root, newPath)) {
-          p = newPath
-          n = Node.get(root, p)
-          continue
+          p = newPath;
+          n = Node.get(root, p);
+          continue;
         }
       }
 
       // If we're going backward...
       if (reverse && p[p.length - 1] !== 0) {
-        const newPath = Path.previous(p)
-        p = newPath
-        n = Node.get(root, p)
-        continue
+        const newPath = Path.previous(p);
+        p = newPath;
+        n = Node.get(root, p);
+        continue;
       }
 
       // Otherwise we're going upward...
-      p = Path.parent(p)
-      n = Node.get(root, p)
-      visited.add(n)
+      p = Path.parent(p);
+      n = Node.get(root, p);
+      visited.add(n);
     }
   },
 
@@ -444,16 +420,14 @@ export const Node = {
    */
 
   parent(root: Node, path: Path): Ancestor {
-    const parentPath = Path.parent(path)
-    const p = Node.get(root, parentPath)
+    const parentPath = Path.parent(path);
+    const p = Node.get(root, parentPath);
 
     if (Text.isText(p)) {
-      throw new Error(
-        `Cannot get the parent of path [${path}] because it does not exist in the root.`
-      )
+      throw new Error(`Cannot get the parent of path [${path}] because it does not exist in the root.`);
     }
 
-    return p
+    return p;
   },
 
   /**
@@ -466,9 +440,9 @@ export const Node = {
 
   string(node: Node): string {
     if (Text.isText(node)) {
-      return node.text
+      return node.text;
     } else {
-      return node.children.map(Node.string).join('')
+      return node.children.map(Node.string).join('');
     }
   },
 
@@ -479,19 +453,19 @@ export const Node = {
   *texts(
     root: Node,
     options: {
-      from?: Path
-      to?: Path
-      reverse?: boolean
-      pass?: (node: NodeEntry) => boolean
-    } = {}
+      from?: Path;
+      to?: Path;
+      reverse?: boolean;
+      pass?: (node: NodeEntry) => boolean;
+    } = {},
   ): Generator<NodeEntry<Text>, void, undefined> {
     for (const [node, path] of Node.nodes(root, options)) {
       if (Text.isText(node)) {
-        yield [node, path]
+        yield [node, path];
       }
     }
   },
-}
+};
 
 /**
  * The `Descendant` union type represents nodes that are descendants in the
@@ -499,7 +473,7 @@ export const Node = {
  * further than the more generic `Node` union.
  */
 
-export type Descendant = Element | Text
+export type Descendant = Element | Text;
 
 /**
  * The `Ancestor` union type represents nodes that are ancestors in the tree.
@@ -507,7 +481,7 @@ export type Descendant = Element | Text
  * than the more generic `Node` union.
  */
 
-export type Ancestor = Editor | Element
+export type Ancestor = Editor | Element;
 
 /**
  * `NodeEntry` objects are returned when iterating over the nodes in a Slate
@@ -515,4 +489,4 @@ export type Ancestor = Editor | Element
  * node in the document.
  */
 
-export type NodeEntry<T extends Node = Node> = [T, Path]
+export type NodeEntry<T extends Node = Node> = [T, Path];

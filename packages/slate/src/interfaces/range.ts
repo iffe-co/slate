@@ -1,6 +1,6 @@
-import { produce } from 'immer'
-import isPlainObject from 'is-plain-object'
-import { Operation, Path, Point, PointEntry } from '..'
+import { produce } from 'immer';
+import { isPlainObject } from 'is-plain-object';
+import { Operation, Path, Point, PointEntry } from '..';
 
 /**
  * `Range` objects are a set of points that refer to a specific span of a Slate
@@ -9,9 +9,9 @@ import { Operation, Path, Point, PointEntry } from '..'
  */
 
 export interface Range {
-  anchor: Point
-  focus: Point
-  [key: string]: unknown
+  anchor: Point;
+  focus: Point;
+  [key: string]: unknown;
 }
 
 export const Range = {
@@ -23,14 +23,12 @@ export const Range = {
   edges(
     range: Range,
     options: {
-      reverse?: boolean
-    } = {}
+      reverse?: boolean;
+    } = {},
   ): [Point, Point] {
-    const { reverse = false } = options
-    const { anchor, focus } = range
-    return Range.isBackward(range) === reverse
-      ? [anchor, focus]
-      : [focus, anchor]
+    const { reverse = false } = options;
+    const { anchor, focus } = range;
+    return Range.isBackward(range) === reverse ? [anchor, focus] : [focus, anchor];
   },
 
   /**
@@ -38,8 +36,8 @@ export const Range = {
    */
 
   end(range: Range): Point {
-    const [, end] = Range.edges(range)
-    return end
+    const [, end] = Range.edges(range);
+    return end;
   },
 
   /**
@@ -47,10 +45,7 @@ export const Range = {
    */
 
   equals(range: Range, another: Range): boolean {
-    return (
-      Point.equals(range.anchor, another.anchor) &&
-      Point.equals(range.focus, another.focus)
-    )
+    return Point.equals(range.anchor, another.anchor) && Point.equals(range.focus, another.focus);
   },
 
   /**
@@ -59,31 +54,28 @@ export const Range = {
 
   includes(range: Range, target: Path | Point | Range): boolean {
     if (Range.isRange(target)) {
-      if (
-        Range.includes(range, target.anchor) ||
-        Range.includes(range, target.focus)
-      ) {
-        return true
+      if (Range.includes(range, target.anchor) || Range.includes(range, target.focus)) {
+        return true;
       }
 
-      const [rs, re] = Range.edges(range)
-      const [ts, te] = Range.edges(target)
-      return Point.isBefore(rs, ts) && Point.isAfter(re, te)
+      const [rs, re] = Range.edges(range);
+      const [ts, te] = Range.edges(target);
+      return Point.isBefore(rs, ts) && Point.isAfter(re, te);
     }
 
-    const [start, end] = Range.edges(range)
-    let isAfterStart = false
-    let isBeforeEnd = false
+    const [start, end] = Range.edges(range);
+    let isAfterStart = false;
+    let isBeforeEnd = false;
 
     if (Point.isPoint(target)) {
-      isAfterStart = Point.compare(target, start) >= 0
-      isBeforeEnd = Point.compare(target, end) <= 0
+      isAfterStart = Point.compare(target, start) >= 0;
+      isBeforeEnd = Point.compare(target, end) <= 0;
     } else {
-      isAfterStart = Path.compare(target, start.path) >= 0
-      isBeforeEnd = Path.compare(target, end.path) <= 0
+      isAfterStart = Path.compare(target, start.path) >= 0;
+      isBeforeEnd = Path.compare(target, end.path) <= 0;
     }
 
-    return isAfterStart && isBeforeEnd
+    return isAfterStart && isBeforeEnd;
   },
 
   /**
@@ -91,16 +83,16 @@ export const Range = {
    */
 
   intersection(range: Range, another: Range): Range | null {
-    const { anchor, focus, ...rest } = range
-    const [s1, e1] = Range.edges(range)
-    const [s2, e2] = Range.edges(another)
-    const start = Point.isBefore(s1, s2) ? s2 : s1
-    const end = Point.isBefore(e1, e2) ? e1 : e2
+    const { anchor, focus, ...rest } = range;
+    const [s1, e1] = Range.edges(range);
+    const [s2, e2] = Range.edges(another);
+    const start = Point.isBefore(s1, s2) ? s2 : s1;
+    const end = Point.isBefore(e1, e2) ? e1 : e2;
 
     if (Point.isBefore(end, start)) {
-      return null
+      return null;
     } else {
-      return { anchor: start, focus: end, ...rest }
+      return { anchor: start, focus: end, ...rest };
     }
   },
 
@@ -110,8 +102,8 @@ export const Range = {
    */
 
   isBackward(range: Range): boolean {
-    const { anchor, focus } = range
-    return Point.isAfter(anchor, focus)
+    const { anchor, focus } = range;
+    return Point.isAfter(anchor, focus);
   },
 
   /**
@@ -120,8 +112,8 @@ export const Range = {
    */
 
   isCollapsed(range: Range): boolean {
-    const { anchor, focus } = range
-    return Point.equals(anchor, focus)
+    const { anchor, focus } = range;
+    return Point.equals(anchor, focus);
   },
 
   /**
@@ -131,7 +123,7 @@ export const Range = {
    */
 
   isExpanded(range: Range): boolean {
-    return !Range.isCollapsed(range)
+    return !Range.isCollapsed(range);
   },
 
   /**
@@ -141,7 +133,7 @@ export const Range = {
    */
 
   isForward(range: Range): boolean {
-    return !Range.isBackward(range)
+    return !Range.isBackward(range);
   },
 
   /**
@@ -149,11 +141,7 @@ export const Range = {
    */
 
   isRange(value: any): value is Range {
-    return (
-      isPlainObject(value) &&
-      Point.isPoint(value.anchor) &&
-      Point.isPoint(value.focus)
-    )
+    return isPlainObject(value) && Point.isPoint(value.anchor) && Point.isPoint(value.focus);
   },
 
   /**
@@ -161,8 +149,8 @@ export const Range = {
    */
 
   *points(range: Range): Generator<PointEntry, void, undefined> {
-    yield [range.anchor, 'anchor']
-    yield [range.focus, 'focus']
+    yield [range.anchor, 'anchor'];
+    yield [range.focus, 'focus'];
   },
 
   /**
@@ -170,8 +158,8 @@ export const Range = {
    */
 
   start(range: Range): Point {
-    const [start] = Range.edges(range)
-    return start
+    const [start] = Range.edges(range);
+    return start;
   },
 
   /**
@@ -182,44 +170,44 @@ export const Range = {
     range: Range,
     op: Operation,
     options: {
-      affinity?: 'forward' | 'backward' | 'outward' | 'inward' | null
-    } = {}
+      affinity?: 'forward' | 'backward' | 'outward' | 'inward' | null;
+    } = {},
   ): Range | null {
-    const { affinity = 'inward' } = options
-    let affinityAnchor: 'forward' | 'backward' | null
-    let affinityFocus: 'forward' | 'backward' | null
+    const { affinity = 'inward' } = options;
+    let affinityAnchor: 'forward' | 'backward' | null;
+    let affinityFocus: 'forward' | 'backward' | null;
 
     if (affinity === 'inward') {
       if (Range.isForward(range)) {
-        affinityAnchor = 'forward'
-        affinityFocus = 'backward'
+        affinityAnchor = 'forward';
+        affinityFocus = 'backward';
       } else {
-        affinityAnchor = 'backward'
-        affinityFocus = 'forward'
+        affinityAnchor = 'backward';
+        affinityFocus = 'forward';
       }
     } else if (affinity === 'outward') {
       if (Range.isForward(range)) {
-        affinityAnchor = 'backward'
-        affinityFocus = 'forward'
+        affinityAnchor = 'backward';
+        affinityFocus = 'forward';
       } else {
-        affinityAnchor = 'forward'
-        affinityFocus = 'backward'
+        affinityAnchor = 'forward';
+        affinityFocus = 'backward';
       }
     } else {
-      affinityAnchor = affinity
-      affinityFocus = affinity
+      affinityAnchor = affinity;
+      affinityFocus = affinity;
     }
 
     return produce(range, r => {
-      const anchor = Point.transform(r.anchor, op, { affinity: affinityAnchor })
-      const focus = Point.transform(r.focus, op, { affinity: affinityFocus })
+      const anchor = Point.transform(r.anchor, op, { affinity: affinityAnchor });
+      const focus = Point.transform(r.focus, op, { affinity: affinityFocus });
 
       if (!anchor || !focus) {
-        return null
+        return null;
       }
 
-      r.anchor = anchor
-      r.focus = focus
-    })
+      r.anchor = anchor;
+      r.focus = focus;
+    });
   },
-}
+};

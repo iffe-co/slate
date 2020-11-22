@@ -1,13 +1,13 @@
 /** @jsx jsx */
-import { Editor } from 'slate'
-import { jsx } from '../../..'
+import { Editor } from '@solidoc/slate';
+import { jsx } from '../../..';
 
 export const input = (
   <editor>
     <block>one</block>
     <block>two</block>
   </editor>
-)
+);
 export const test = editor => {
   return Editor.parent(
     editor,
@@ -15,7 +15,7 @@ export const test = editor => {
       anchor: { path: [0, 0], offset: 1 },
       focus: { path: [1, 0], offset: 2 },
     },
-    { edge: 'start' }
-  )
-}
-export const output = [<block>one</block>, [0]]
+    { edge: 'start' },
+  );
+};
+export const output = [<block>one</block>, [0]];

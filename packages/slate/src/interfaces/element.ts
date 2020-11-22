@@ -1,5 +1,5 @@
-import isPlainObject from 'is-plain-object'
-import { Editor, Node, Path } from '..'
+import { isPlainObject } from 'is-plain-object';
+import { Editor, Node, Path } from '..';
 
 /**
  * `Element` objects are a type of node in a Slate document that contain other
@@ -8,8 +8,8 @@ import { Editor, Node, Path } from '..'
  */
 
 export interface Element {
-  children: Node[]
-  [key: string]: unknown
+  children: Node[];
+  [key: string]: unknown;
 }
 
 export const Element = {
@@ -18,11 +18,7 @@ export const Element = {
    */
 
   isElement(value: any): value is Element {
-    return (
-      isPlainObject(value) &&
-      Node.isNodeList(value.children) &&
-      !Editor.isEditor(value)
-    )
+    return isPlainObject(value) && Node.isNodeList(value.children) && !Editor.isEditor(value);
   },
 
   /**
@@ -30,10 +26,7 @@ export const Element = {
    */
 
   isElementList(value: any): value is Element[] {
-    return (
-      Array.isArray(value) &&
-      (value.length === 0 || Element.isElement(value[0]))
-    )
+    return Array.isArray(value) && (value.length === 0 || Element.isElement(value[0]));
   },
 
   /**
@@ -46,21 +39,21 @@ export const Element = {
   matches(element: Element, props: Partial<Element>): boolean {
     for (const key in props) {
       if (key === 'children') {
-        continue
+        continue;
       }
 
       if (element[key] !== props[key]) {
-        return false
+        return false;
       }
     }
 
-    return true
+    return true;
   },
-}
+};
 
 /**
  * `ElementEntry` objects refer to an `Element` and the `Path` where it can be
  * found inside a root node.
  */
 
-export type ElementEntry = [Element, Path]
+export type ElementEntry = [Element, Path];

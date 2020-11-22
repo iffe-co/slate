@@ -1,4 +1,4 @@
-import { Editor, Location, Point, Range, Transforms } from '..'
+import { Editor, Location, Point, Range, Transforms } from '..';
 
 export const SelectionTransforms = {
   /**
@@ -8,24 +8,24 @@ export const SelectionTransforms = {
   collapse(
     editor: Editor,
     options: {
-      edge?: 'anchor' | 'focus' | 'start' | 'end'
-    } = {}
+      edge?: 'anchor' | 'focus' | 'start' | 'end';
+    } = {},
   ) {
-    const { edge = 'anchor' } = options
-    const { selection } = editor
+    const { edge = 'anchor' } = options;
+    const { selection } = editor;
 
     if (!selection) {
-      return
+      return;
     } else if (edge === 'anchor') {
-      Transforms.select(editor, selection.anchor)
+      Transforms.select(editor, selection.anchor);
     } else if (edge === 'focus') {
-      Transforms.select(editor, selection.focus)
+      Transforms.select(editor, selection.focus);
     } else if (edge === 'start') {
-      const [start] = Range.edges(selection)
-      Transforms.select(editor, start)
+      const [start] = Range.edges(selection);
+      Transforms.select(editor, start);
     } else if (edge === 'end') {
-      const [, end] = Range.edges(selection)
-      Transforms.select(editor, end)
+      const [, end] = Range.edges(selection);
+      Transforms.select(editor, end);
     }
   },
 
@@ -34,14 +34,14 @@ export const SelectionTransforms = {
    */
 
   deselect(editor: Editor) {
-    const { selection } = editor
+    const { selection } = editor;
 
     if (selection) {
       editor.apply({
         type: 'set_selection',
         properties: selection,
         newProperties: null,
-      })
+      });
     }
   },
 
@@ -52,53 +52,49 @@ export const SelectionTransforms = {
   move(
     editor: Editor,
     options: {
-      distance?: number
-      unit?: 'offset' | 'character' | 'word' | 'line'
-      reverse?: boolean
-      edge?: 'anchor' | 'focus' | 'start' | 'end'
-    } = {}
+      distance?: number;
+      unit?: 'offset' | 'character' | 'word' | 'line';
+      reverse?: boolean;
+      edge?: 'anchor' | 'focus' | 'start' | 'end';
+    } = {},
   ) {
-    const { selection } = editor
-    const { distance = 1, unit = 'character', reverse = false } = options
-    let { edge = null } = options
+    const { selection } = editor;
+    const { distance = 1, unit = 'character', reverse = false } = options;
+    let { edge = null } = options;
 
     if (!selection) {
-      return
+      return;
     }
 
     if (edge === 'start') {
-      edge = Range.isBackward(selection) ? 'focus' : 'anchor'
+      edge = Range.isBackward(selection) ? 'focus' : 'anchor';
     }
 
     if (edge === 'end') {
-      edge = Range.isBackward(selection) ? 'anchor' : 'focus'
+      edge = Range.isBackward(selection) ? 'anchor' : 'focus';
     }
 
-    const { anchor, focus } = selection
-    const opts = { distance, unit }
-    const props: Partial<Range> = {}
+    const { anchor, focus } = selection;
+    const opts = { distance, unit };
+    const props: Partial<Range> = {};
 
     if (edge == null || edge === 'anchor') {
-      const point = reverse
-        ? Editor.before(editor, anchor, opts)
-        : Editor.after(editor, anchor, opts)
+      const point = reverse ? Editor.before(editor, anchor, opts) : Editor.after(editor, anchor, opts);
 
       if (point) {
-        props.anchor = point
+        props.anchor = point;
       }
     }
 
     if (edge == null || edge === 'focus') {
-      const point = reverse
-        ? Editor.before(editor, focus, opts)
-        : Editor.after(editor, focus, opts)
+      const point = reverse ? Editor.before(editor, focus, opts) : Editor.after(editor, focus, opts);
 
       if (point) {
-        props.focus = point
+        props.focus = point;
       }
     }
 
-    Transforms.setSelection(editor, props)
+    Transforms.setSelection(editor, props);
   },
 
   /**
@@ -106,27 +102,27 @@ export const SelectionTransforms = {
    */
 
   select(editor: Editor, target: Location) {
-    const { selection } = editor
-    target = Editor.range(editor, target)
+    const { selection } = editor;
+    target = Editor.range(editor, target);
 
     if (selection) {
-      Transforms.setSelection(editor, target)
-      return
+      Transforms.setSelection(editor, target);
+      return;
     }
 
     if (!Range.isRange(target)) {
       throw new Error(
         `When setting the selection and the current selection is \`null\` you must provide at least an \`anchor\` and \`focus\`, but you passed: ${JSON.stringify(
-          target
-        )}`
-      )
+          target,
+        )}`,
+      );
     }
 
     editor.apply({
       type: 'set_selection',
       properties: selection,
       newProperties: target,
-    })
+    });
   },
 
   /**
@@ -137,30 +133,30 @@ export const SelectionTransforms = {
     editor: Editor,
     props: Partial<Point>,
     options: {
-      edge?: 'anchor' | 'focus' | 'start' | 'end'
-    }
+      edge?: 'anchor' | 'focus' | 'start' | 'end';
+    },
   ) {
-    const { selection } = editor
-    let { edge = 'both' } = options
+    const { selection } = editor;
+    let { edge = 'both' } = options;
 
     if (!selection) {
-      return
+      return;
     }
 
     if (edge === 'start') {
-      edge = Range.isBackward(selection) ? 'focus' : 'anchor'
+      edge = Range.isBackward(selection) ? 'focus' : 'anchor';
     }
 
     if (edge === 'end') {
-      edge = Range.isBackward(selection) ? 'anchor' : 'focus'
+      edge = Range.isBackward(selection) ? 'anchor' : 'focus';
     }
 
-    const { anchor, focus } = selection
-    const point = edge === 'anchor' ? anchor : focus
+    const { anchor, focus } = selection;
+    const point = edge === 'anchor' ? anchor : focus;
 
     Transforms.setSelection(editor, {
       [edge === 'anchor' ? 'anchor' : 'focus']: { ...point, ...props },
-    })
+    });
   },
 
   /**
@@ -168,26 +164,22 @@ export const SelectionTransforms = {
    */
 
   setSelection(editor: Editor, props: Partial<Range>) {
-    const { selection } = editor
-    const oldProps: Partial<Range> | null = {}
-    const newProps: Partial<Range> = {}
+    const { selection } = editor;
+    const oldProps: Partial<Range> | null = {};
+    const newProps: Partial<Range> = {};
 
     if (!selection) {
-      return
+      return;
     }
 
     for (const k in props) {
       if (
-        (k === 'anchor' &&
-          props.anchor != null &&
-          !Point.equals(props.anchor, selection.anchor)) ||
-        (k === 'focus' &&
-          props.focus != null &&
-          !Point.equals(props.focus, selection.focus)) ||
+        (k === 'anchor' && props.anchor != null && !Point.equals(props.anchor, selection.anchor)) ||
+        (k === 'focus' && props.focus != null && !Point.equals(props.focus, selection.focus)) ||
         (k !== 'anchor' && k !== 'focus' && props[k] !== selection[k])
       ) {
-        oldProps[k] = selection[k]
-        newProps[k] = props[k]
+        oldProps[k] = selection[k];
+        newProps[k] = props[k];
       }
     }
 
@@ -196,7 +188,7 @@ export const SelectionTransforms = {
         type: 'set_selection',
         properties: oldProps,
         newProperties: newProps,
-      })
+      });
     }
   },
-}
+};

@@ -1,10 +1,10 @@
-import { Element } from 'slate'
+import { Element } from '@solidoc/slate';
 
 export const input = {
   children: [],
   custom: 'value',
-}
+};
 export const test = value => {
-  return Element.isElement(value)
-}
-export const output = true
+  return Element.isElement(value);
+};
+export const output = true;

@@ -2,7 +2,7 @@
  * An auto-incrementing identifier for keys.
  */
 
-let n = 0
+let n = 0;
 
 /**
  * A class that keeps track of a key string. We use a full class here because we
@@ -10,9 +10,9 @@ let n = 0
  */
 
 export class Key {
-  id: string
+  public id: string;
 
-  constructor() {
-    this.id = `${n++}`
+  public constructor() {
+    this.id = `${n++}`;
   }
 }

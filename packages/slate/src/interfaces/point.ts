@@ -1,6 +1,6 @@
-import isPlainObject from 'is-plain-object'
-import { produce } from 'immer'
-import { Operation, Path } from '..'
+import { isPlainObject } from 'is-plain-object';
+import { produce } from 'immer';
+import { Operation, Path } from '..';
 
 /**
  * `Point` objects refer to a specific location in a text node in a Slate
@@ -10,9 +10,9 @@ import { Operation, Path } from '..'
  */
 
 export interface Point {
-  path: Path
-  offset: number
-  [key: string]: unknown
+  path: Path;
+  offset: number;
+  [key: string]: unknown;
 }
 
 export const Point = {
@@ -22,15 +22,15 @@ export const Point = {
    */
 
   compare(point: Point, another: Point): -1 | 0 | 1 {
-    const result = Path.compare(point.path, another.path)
+    const result = Path.compare(point.path, another.path);
 
     if (result === 0) {
-      if (point.offset < another.offset) return -1
-      if (point.offset > another.offset) return 1
-      return 0
+      if (point.offset < another.offset) return -1;
+      if (point.offset > another.offset) return 1;
+      return 0;
     }
 
-    return result
+    return result;
   },
 
   /**
@@ -38,7 +38,7 @@ export const Point = {
    */
 
   isAfter(point: Point, another: Point): boolean {
-    return Point.compare(point, another) === 1
+    return Point.compare(point, another) === 1;
   },
 
   /**
@@ -46,7 +46,7 @@ export const Point = {
    */
 
   isBefore(point: Point, another: Point): boolean {
-    return Point.compare(point, another) === -1
+    return Point.compare(point, another) === -1;
   },
 
   /**
@@ -55,9 +55,7 @@ export const Point = {
 
   equals(point: Point, another: Point): boolean {
     // PERF: ensure the offsets are equal first since they are cheaper to check.
-    return (
-      point.offset === another.offset && Path.equals(point.path, another.path)
-    )
+    return point.offset === another.offset && Path.equals(point.path, another.path);
   },
 
   /**
@@ -65,96 +63,85 @@ export const Point = {
    */
 
   isPoint(value: any): value is Point {
-    return (
-      isPlainObject(value) &&
-      typeof value.offset === 'number' &&
-      Path.isPath(value.path)
-    )
+    return isPlainObject(value) && typeof value.offset === 'number' && Path.isPath(value.path);
   },
 
   /**
    * Transform a point by an operation.
    */
 
-  transform(
-    point: Point,
-    op: Operation,
-    options: { affinity?: 'forward' | 'backward' | null } = {}
-  ): Point | null {
+  transform(point: Point, op: Operation, options: { affinity?: 'forward' | 'backward' | null } = {}): Point | null {
     return produce(point, p => {
-      const { affinity = 'forward' } = options
-      const { path, offset } = p
+      const { affinity = 'forward' } = options;
+      const { path, offset } = p;
 
       switch (op.type) {
         case 'insert_node':
         case 'move_node': {
-          p.path = Path.transform(path, op, options)!
-          break
+          p.path = Path.transform(path, op, options)!;
+          break;
         }
 
         case 'insert_text': {
           if (Path.equals(op.path, path) && op.offset <= offset) {
-            p.offset += op.text.length
+            p.offset += op.text.length;
           }
 
-          break
+          break;
         }
 
         case 'merge_node': {
           if (Path.equals(op.path, path)) {
-            p.offset += op.position
+            p.offset += op.position;
           }
 
-          p.path = Path.transform(path, op, options)!
-          break
+          p.path = Path.transform(path, op, options)!;
+          break;
         }
 
         case 'remove_text': {
           if (Path.equals(op.path, path) && op.offset <= offset) {
-            p.offset -= Math.min(offset - op.offset, op.text.length)
+            p.offset -= Math.min(offset - op.offset, op.text.length);
           }
 
-          break
+          break;
         }
 
         case 'remove_node': {
           if (Path.equals(op.path, path) || Path.isAncestor(op.path, path)) {
-            return null
+            return null;
           }
 
-          p.path = Path.transform(path, op, options)!
-          break
+          p.path = Path.transform(path, op, options)!;
+          break;
         }
 
         case 'split_node': {
           if (Path.equals(op.path, path)) {
             if (op.position === offset && affinity == null) {
-              return null
-            } else if (
-              op.position < offset ||
-              (op.position === offset && affinity === 'forward')
-            ) {
-              p.offset -= op.position
+              return null;
+            } else if (op.position < offset || (op.position === offset && affinity === 'forward')) {
+              p.offset -= op.position;
 
               p.path = Path.transform(path, op, {
                 ...options,
                 affinity: 'forward',
-              })!
+              })!;
             }
           } else {
-            p.path = Path.transform(path, op, options)!
+            p.path = Path.transform(path, op, options)!;
           }
 
-          break
+          break;
         }
       }
-    })
+    });
   },
-}
+};
 
 /**
  * `PointEntry` objects are returned when iterating over `Point` objects that
  * belong to a range.
  */
 
-export type PointEntry = [Point, 'anchor' | 'focus']
+export type PointEntry = [Point, 'anchor' | 'focus'];

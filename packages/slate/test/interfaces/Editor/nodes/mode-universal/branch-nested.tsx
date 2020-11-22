@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { Editor } from 'slate'
-import { jsx } from '../../../..'
+import { Editor } from '@solidoc/slate';
+import { jsx } from '../../../..';
 
 export const input = (
   <editor>
@@ -11,7 +11,7 @@ export const input = (
       <block a>two</block>
     </block>
   </editor>
-)
+);
 export const test = editor => {
   return Array.from(
     Editor.nodes(editor, {
@@ -19,9 +19,9 @@ export const test = editor => {
       match: n => n.a === true,
       mode: 'lowest',
       universal: true,
-    })
-  )
-}
+    }),
+  );
+};
 export const output = [
   [
     <block a>
@@ -30,4 +30,4 @@ export const output = [
     [0],
   ],
   [<block a>two</block>, [1, 0]],
-]
+];

@@ -1,6 +1,6 @@
 /** @jsx jsx */
-import { Editor } from 'slate'
-import { jsx } from '../../..'
+import { Editor } from '@solidoc/slate';
+import { jsx } from '../../..';
 
 export const input = (
   <editor>
@@ -9,9 +9,9 @@ export const input = (
       <cursor />
     </block>
   </editor>
-)
+);
 export const test = editor => {
-  const { anchor } = editor.selection
-  return Editor.isEnd(editor, anchor, [0])
-}
-export const output = true
+  const { anchor } = editor.selection;
+  return Editor.isEnd(editor, anchor, [0]);
+};
+export const output = true;
