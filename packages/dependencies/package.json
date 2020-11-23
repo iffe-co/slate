@@ -15,7 +15,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/iffe-co/slate.git"
+    "url": "https://github.com/solidoc/iffe-react.git"
   },
   "dependencies": {
     "@solidoc/slate": "0.1.0",
