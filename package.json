@@ -1,14 +1,13 @@
 {
-  "name": "iffe-monorepos",
+  "name": "iffe-editor-monorepos",
   "version": "0.0.0-development",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
-  "homepage": "http://121.89.222.91:3000/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/solidoc/iffe-editor.git"
+    "url": "https://github.com/iffe-co/slate.git"
   },
   "description": "",
   "main": "index.tsx",
