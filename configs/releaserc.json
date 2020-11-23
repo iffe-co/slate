@@ -1,7 +1,7 @@
 {
   "extends": [],
   "branches": [
-    "master",
+    "main",
     {
       "name": "dev",
       "prerelease": "alpha"

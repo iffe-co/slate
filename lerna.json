@@ -1,7 +1,5 @@
 {
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
   "useWorkspaces": true,
   "npmClient": "yarn",
   "version": "independent",
@@ -11,10 +9,7 @@
       "message": "chore(release): publish [skip ci]"
     },
     "publish": {
-      "allowBranch": [
-        "master",
-        "dev"
-      ],
+      "allowBranch": ["master", "main", "dev"],
       "conventionalCommits": true,
       "exact": true
     }
