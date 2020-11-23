@@ -1,5 +1,5 @@
 {
-  "name": "@solidoc/editor-dependencies",
+  "name": "@solidoc/slate-dependencies",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.es.js",

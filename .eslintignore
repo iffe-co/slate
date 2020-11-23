@@ -1,3 +1,4 @@
 *.css
 scripts/**
-test/**
+packages/**/test/**
+packages/**/dist/**
