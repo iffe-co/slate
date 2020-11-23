@@ -1,0 +1,70 @@
+# api参考
+# https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions
+
+name: master_ci
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check user
+        run: echo "启动成员：$GITHUB_ACTOR"
+
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: set cache node modules
+        uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: set node env
+        uses: actions/setup-node@v1
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@solidoc'
+
+      - name: install dependencies
+        run: yarn
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.SOLIDOC_TOKEN }}
+          CI: true
+
+      - name: yarn fix
+        run: yarn fix
+
+      - name: Configure CI Git User
+        run: |
+          git config user.email ${{ secrets.CI_GIT_USER }}
+          git config user.name $GITHUB_ACTOR
+
+      - name: build
+        run: export NODE_OPTIONS="--max_old_space_size=4096" && yarn ci-build
+
+      - name: commit yarn lock
+        run: git add yarn.lock && git commit -m "ci update lock file" --allow-empty
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.SOLIDOC_TOKEN }}
+
+      - name: lerna version
+        run: yarn lerna version -y
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.SOLIDOC_TOKEN }}
+
+      - name: lerna publish
+        run: yarn npm:publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.SOLIDOC_TOKEN }}
