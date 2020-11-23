@@ -12,7 +12,7 @@ const Leaf = (props: {
   isLast: boolean;
   leaf: Text;
   parent: Element;
-  renderLeaf?: React.FC<RenderLeafProps>;
+  renderLeaf?: (props: RenderLeafProps) => JSX.Element;
   text: Text;
 }) => {
   const { leaf, isLast, text, parent, renderLeaf = (props: RenderLeafProps) => <DefaultLeaf {...props} /> } = props;

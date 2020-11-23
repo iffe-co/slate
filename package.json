@@ -20,7 +20,7 @@
     "prod": "node scripts/build.js --env prod",
     "build": "yarn prod",
     "ci-build": "node scripts/ci-build.js",
-    "start-react": "yarn dev -p view-table",
+    "start-react": "yarn dev -p slate-react",
     "start": "yarn rstart",
     "rstart": "rm -f tsconfig.json & PORT=1234 yarn react-scripts start",
     "rbuild": "yarn react-scripts build",
@@ -149,6 +149,12 @@
     },
     "cz-customizable": {
       "config": "node_modules/@solidoc/iffe-cli/configs/cz-customizable.js"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint --config node_modules/@solidoc/iffe-cli/configs/commitlint.js --env HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {

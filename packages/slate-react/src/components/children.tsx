@@ -15,8 +15,8 @@ const Children = (props: {
   decorate: (entry: NodeEntry) => Range[];
   decorations: Range[];
   node: Ancestor;
-  renderElement?: React.FC<RenderElementProps>;
-  renderLeaf?: React.FC<RenderLeafProps>;
+  renderElement?: (props: RenderElementProps) => JSX.Element;
+  renderLeaf?: (props: RenderLeafProps) => JSX.Element;
   selection: Range | null;
 }) => {
   const { decorate, decorations, node, renderElement, renderLeaf, selection } = props;

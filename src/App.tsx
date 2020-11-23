@@ -1,10 +1,10 @@
 import React from 'react';
-import { TestImmer } from './demo/TestImmer';
+import { TestDemo } from './demo/TestDemo';
 
 function App() {
   return (
     <div>
-      <TestImmer />
+      <TestDemo />
     </div>
   );
 }

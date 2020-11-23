@@ -17,8 +17,8 @@ const Element = (props: {
   decorate: (entry: NodeEntry) => Range[];
   decorations: Range[];
   element: SlateElement;
-  renderElement?: React.FC<RenderElementProps>;
-  renderLeaf?: React.FC<RenderLeafProps>;
+  renderElement?: (props: RenderElementProps) => JSX.Element;
+  renderLeaf?: (props: RenderLeafProps) => JSX.Element;
   selection: Range | null;
 }) => {
   const {

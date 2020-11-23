@@ -4,6 +4,7 @@ import { ReactEditor } from './react-editor';
 import { Key } from '../utils/key';
 import { EDITOR_TO_ON_CHANGE, NODE_TO_KEY } from '../utils/weak-maps';
 import { isDOMText, getPlainText } from '../utils/dom';
+import { type } from 'os';
 
 /**
  * `withReact` adds React and DOM specific behaviors to the editor.

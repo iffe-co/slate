@@ -14,7 +14,7 @@ const Text = (props: {
   decorations: Range[];
   isLast: boolean;
   parent: Element;
-  renderLeaf?: React.FC<RenderLeafProps>;
+  renderLeaf?: (props: RenderLeafProps) => JSX.Element;
   text: SlateText;
 }) => {
   const { decorations, isLast, parent, renderLeaf, text } = props;
