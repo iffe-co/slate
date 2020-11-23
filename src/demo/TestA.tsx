@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { ReactEditor, RenderElementProps, useSlateStatic } from '@solidoc/slate-react';
-import { Transforms } from '@solidoc/slate';
+import { Transforms, Node, Element } from '@solidoc/slate';
+import { createDraft, finishDraft } from 'immer';
 
 export const TestA = (props: RenderElementProps) => {
   const { attributes, children, element } = props;
@@ -13,7 +14,19 @@ export const TestA = (props: RenderElementProps) => {
     Transforms.insertNodes(editor, insertNode, { at: path.concat(0) });
   };
 
-  const onClickImmer = () => {};
+  const onClickImmer = () => {
+    const insertPath = [0, 0];
+    const insertNode = { type: 'testp', children: [{ text: 'immer insert' }] };
+    const parent = Node.parent(editor, insertPath);
+
+    editor.viewApply(() => {
+      editor.children = createDraft(editor.children);
+      const parent = Node.parent(editor, insertPath);
+      parent.children.push(insertNode);
+      editor.children = finishDraft(editor.children);
+      editor.onChange();
+    }, parent);
+  };
 
   useEffect(() => {
     console.info('组件加载了useEffect');

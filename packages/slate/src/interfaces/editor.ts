@@ -51,6 +51,9 @@ export interface Editor {
   insertNode: (node: Node) => void;
   insertText: (text: string) => void;
   removeMark: (key: string) => void;
+
+  // iffe Expand
+  viewApply: (callback: () => void, changeNode: Node) => void;
 }
 
 export const Editor = {

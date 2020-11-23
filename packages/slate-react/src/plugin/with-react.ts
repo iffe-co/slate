@@ -14,6 +14,22 @@ export const withReact = <T extends Editor>(editor: T) => {
   const e = editor as T & ReactEditor;
   const { apply, onChange } = e;
 
+  e.viewApply = (callback: () => void, changeNode: Node) => {
+    const changePath = ReactEditor.findPath(e, changeNode);
+    const matches: [Path, Key][] = [];
+    for (const [node, path] of Editor.levels(e, { at: changePath })) {
+      const key = ReactEditor.findKey(e, node);
+      matches.push([path, key]);
+    }
+
+    callback();
+
+    for (const [path, key] of matches) {
+      const [node] = Editor.node(e, path);
+      NODE_TO_KEY.set(node, key);
+    }
+  };
+
   e.apply = (op: Operation) => {
     const matches: [Path, Key][] = [];
 
