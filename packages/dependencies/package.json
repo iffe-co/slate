@@ -1,6 +1,6 @@
 {
   "name": "@solidoc/slate-dependencies",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
@@ -18,10 +18,10 @@
     "url": "https://github.com/iffe-co/slate.git"
   },
   "dependencies": {
-    "@solidoc/slate": "0.0.1",
-    "@solidoc/slate-history": "0.0.1",
-    "@solidoc/slate-hyperscript": "0.0.1",
-    "@solidoc/slate-react": "0.0.1",
+    "@solidoc/slate": "0.1.0",
+    "@solidoc/slate-history": "0.0.2",
+    "@solidoc/slate-hyperscript": "0.0.2",
+    "@solidoc/slate-react": "0.1.0",
     "esrever": "^0.2.0",
     "immer": "^5.0.0",
     "is-hotkey": "^0.1.6",
@@ -30,7 +30,6 @@
     "scroll-into-view-if-needed": "^2.2.20",
     "tiny-warning": "^1.0.3"
   },
-  "devDependencies": {},
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
