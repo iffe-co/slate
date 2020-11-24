@@ -55,7 +55,7 @@ function getRollupConfig(config) {
         strip({
           include: [],
           debugger: true,
-          functions: ['console.*', 'assert.*'],
+          functions: ['assert.*'],
         }),
     ],
     onwarn: (warning, warn) => {
@@ -69,7 +69,8 @@ function getRollupConfig(config) {
     file: outputFile,
     format: bundleType,
     sourcemap: true,
-    plugins: [ENV.isProdEnv() && terser()],
+    //plugins: [ENV.isProdEnv() && terser()],
+    plugins: [],
   };
 
   const watchOptions = {
