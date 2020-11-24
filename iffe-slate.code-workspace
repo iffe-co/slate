@@ -23,8 +23,8 @@
       "LICENSE": true,
       ".yarnrc": true,
       ".npmrc": true,
-      "lerna.json": true,
-      ".gitignore": true
+      "lerna.json": true
+      // ".gitignore": true
       // "tsconfig.json": true
     },
     "explorer.compactFolders": false,
