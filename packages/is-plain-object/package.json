@@ -1,6 +1,6 @@
 {
   "name": "@solidoc/is-plain-object",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",

@@ -1,6 +1,6 @@
 {
   "name": "@solidoc/slate-dependencies",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
@@ -18,11 +18,11 @@
     "url": "https://github.com/solidoc/iffe-react.git"
   },
   "dependencies": {
-    "@solidoc/slate": "0.1.0",
-    "@solidoc/slate-history": "0.0.2",
-    "@solidoc/slate-hyperscript": "0.0.2",
+    "@solidoc/is-plain-object": "0.1.0",
+    "@solidoc/slate": "0.2.0",
+    "@solidoc/slate-history": "0.1.0",
+    "@solidoc/slate-hyperscript": "0.1.0",
     "@solidoc/slate-react": "0.1.0",
-    "@solidoc/is-plain-object": "0.0.1",
     "esrever": "^0.2.0",
     "immer": "8.0.0",
     "is-hotkey": "^0.1.7",
