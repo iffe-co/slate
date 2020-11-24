@@ -1,0 +1,20 @@
+{
+  "name": "@solidoc/is-plain-object",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.es.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "author": "",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solidoc/iffe-react.git"
+  }
+}

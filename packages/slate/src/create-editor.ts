@@ -27,7 +27,7 @@ export const createEditor = (): Editor => {
     marks: null,
     isInline: () => false,
     isVoid: () => false,
-    viewApply: (callback: () => void, path: Path) => {},
+    viewApply: (callback: () => void, changeNode: Node) => {},
     onChange: () => {},
 
     apply: (op: Operation) => {

@@ -1,5 +1,5 @@
 import { Node, Path, Range } from '..';
-import { isPlainObject } from 'is-plain-object';
+import { isPlainObject } from '@solidoc/is-plain-object';
 
 export interface InsertNodeOperation {
   type: 'insert_node';

@@ -1,4 +1,4 @@
-import { isPlainObject } from 'is-plain-object';
+import { isPlainObject } from '@solidoc/is-plain-object';
 import { Range } from '..';
 
 /**

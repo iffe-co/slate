@@ -1,4 +1,4 @@
-import { isPlainObject } from 'is-plain-object';
+import { isPlainObject } from '@solidoc/is-plain-object';
 import { produce } from 'immer';
 import { Operation, Path } from '..';
 

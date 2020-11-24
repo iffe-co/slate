@@ -1,5 +1,5 @@
 import { produce } from 'immer';
-import { isPlainObject } from 'is-plain-object';
+import { isPlainObject } from '@solidoc/is-plain-object';
 import { Operation, Path, Point, PointEntry } from '..';
 
 /**

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { ReactEditor, RenderElementProps, useSlateStatic } from '@solidoc/slate-react';
-import { Transforms, Node, Element } from '@solidoc/slate';
+import { Transforms, Node } from '@solidoc/slate';
 import { createDraft, finishDraft } from 'immer';
 
 export const TestA = (props: RenderElementProps) => {
@@ -18,7 +18,6 @@ export const TestA = (props: RenderElementProps) => {
     const insertPath = [0, 0];
     const insertNode = { type: 'testp', children: [{ text: 'immer insert' }] };
     const parent = Node.parent(editor, insertPath);
-
     editor.viewApply(() => {
       editor.children = createDraft(editor.children);
       const parent = Node.parent(editor, insertPath);
