@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/solidoc/iffe-react/compare/@solidoc/slate-react@0.1.0...@solidoc/slate-react@0.1.1) (2020-11-24)
+
+
+### Bug Fixes
+
+* fix(update slate-react): ([5bd89ff](https://github.com/solidoc/iffe-react/commit/5bd89ff94090479d6257aff9b2fb674fe9a82cb8))
+
+
+
+
+
 # 0.1.0 (2020-11-23)
 
 ### Features
