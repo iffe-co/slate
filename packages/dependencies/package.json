@@ -1,6 +1,6 @@
 {
   "name": "@solidoc/slate-dependencies",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
@@ -22,7 +22,7 @@
     "@solidoc/slate": "0.2.0",
     "@solidoc/slate-history": "0.1.0",
     "@solidoc/slate-hyperscript": "0.1.0",
-    "@solidoc/slate-react": "0.1.2",
+    "@solidoc/slate-react": "0.1.3",
     "esrever": "^0.2.0",
     "immer": "8.0.0",
     "is-hotkey": "^0.1.7",
