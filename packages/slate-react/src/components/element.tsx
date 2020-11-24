@@ -55,8 +55,10 @@ const Element = (props: {
     contentEditable?: false;
     dir?: 'rtl';
     ref: any;
+    'data-key-id': string;
   } = {
     'data-slate-node': 'element',
+    'data-key-id': key.id,
     ref,
   };
 
@@ -124,15 +126,15 @@ const Element = (props: {
 };
 
 export const MemoizedElement = React.memo(Element, (prev, next) => {
-  return (
+  const isMemoized =
     prev.decorate === next.decorate &&
     prev.element === next.element &&
     prev.renderElement === next.renderElement &&
     prev.renderLeaf === next.renderLeaf &&
     isRangeListEqual(prev.decorations, next.decorations) &&
     (prev.selection === next.selection ||
-      (!!prev.selection && !!next.selection && Range.equals(prev.selection, next.selection)))
-  );
+      (!!prev.selection && !!next.selection && Range.equals(prev.selection, next.selection)));
+  return isMemoized;
 });
 
 /**

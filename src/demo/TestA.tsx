@@ -15,9 +15,10 @@ export const TestA = (props: RenderElementProps) => {
   };
 
   const onClickImmer = () => {
-    const insertPath = [0, 0];
+    const insertPath = [0, 0, 0];
     const insertNode = { type: 'testp', children: [{ text: 'immer insert' }] };
     const parent = Node.parent(editor, insertPath);
+
     editor.viewApply(() => {
       editor.children = createDraft(editor.children);
       const parent = Node.parent(editor, insertPath);
@@ -25,6 +26,11 @@ export const TestA = (props: RenderElementProps) => {
       editor.children = finishDraft(editor.children);
       editor.onChange();
     }, parent);
+  };
+
+  const onSetNode = () => {
+    const path = ReactEditor.findPath(editor, element);
+    Transforms.setNodes(editor, { checked: !checked }, { at: path });
   };
 
   useEffect(() => {
@@ -39,6 +45,7 @@ export const TestA = (props: RenderElementProps) => {
       <div>
         <div contentEditable={false} suppressContentEditableWarning>
           <button onClick={onClickSlate}>slate insert</button>
+          <button onClick={onSetNode}>slate set</button>
           <button onClick={onClickImmer}>immer insert</button>
           {checked ? 'true' : 'false'}
         </div>

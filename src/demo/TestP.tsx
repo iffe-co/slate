@@ -14,10 +14,10 @@ export const TestP = (props: RenderElementProps) => {
   return (
     <div {...attributes}>
       <div>
-        <div contentEditable={false} suppressContentEditableWarning>
+        {/* <div contentEditable={false} suppressContentEditableWarning>
           <button onClick={onClick}>testp按钮</button>
           {checked ? 'true' : 'false'}
-        </div>
+        </div> */}
         <span>{children}</span>
       </div>
     </div>

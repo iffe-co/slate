@@ -4,7 +4,6 @@ import { ReactEditor } from './react-editor';
 import { Key } from '../utils/key';
 import { EDITOR_TO_ON_CHANGE, NODE_TO_KEY } from '../utils/weak-maps';
 import { isDOMText, getPlainText } from '../utils/dom';
-import { type } from 'os';
 
 /**
  * `withReact` adds React and DOM specific behaviors to the editor.
@@ -45,7 +44,6 @@ export const withReact = <T extends Editor>(editor: T) => {
           const key = ReactEditor.findKey(e, node);
           matches.push([path, key]);
         }
-
         break;
       }
 
@@ -59,7 +57,6 @@ export const withReact = <T extends Editor>(editor: T) => {
           const key = ReactEditor.findKey(e, node);
           matches.push([path, key]);
         }
-
         break;
       }
 
