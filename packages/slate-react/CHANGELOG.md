@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/solidoc/iffe-react/compare/@solidoc/slate-react@0.1.3...@solidoc/slate-react@0.1.4) (2020-11-25)
+
+
+### Bug Fixes
+
+* 修改viewApply的参数node,改为path ([39b11db](https://github.com/solidoc/iffe-react/commit/39b11db3819fa221e8927e3919aa4930ad93569a))
+
+
+
+
+
 ## [0.1.3](https://github.com/solidoc/iffe-react/compare/@solidoc/slate-react@0.1.2...@solidoc/slate-react@0.1.3) (2020-11-24)
 
 
