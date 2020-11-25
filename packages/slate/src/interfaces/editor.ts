@@ -53,7 +53,7 @@ export interface Editor {
   removeMark: (key: string) => void;
 
   // iffe Expand
-  viewApply: (callback: () => void, changeNode: Node) => void;
+  viewApply: (callback: () => void, changePath: Path) => void;
 }
 
 export const Editor = {

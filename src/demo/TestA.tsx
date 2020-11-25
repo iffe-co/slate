@@ -17,7 +17,6 @@ export const TestA = (props: RenderElementProps) => {
   const onClickImmer = () => {
     const insertPath = [0, 0, 0];
     const insertNode = { type: 'testp', children: [{ text: 'immer insert' }] };
-    const parent = Node.parent(editor, insertPath);
 
     editor.viewApply(() => {
       editor.children = createDraft(editor.children);
@@ -25,7 +24,7 @@ export const TestA = (props: RenderElementProps) => {
       parent.children.push(insertNode);
       editor.children = finishDraft(editor.children);
       editor.onChange();
-    }, parent);
+    }, insertPath);
   };
 
   const onSetNode = () => {
