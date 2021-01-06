@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/solidoc/iffe-react/compare/@solidoc/is-plain-object@0.1.0...@solidoc/is-plain-object@0.1.1) (2021-01-06)
+
+**Note:** Version bump only for package @solidoc/is-plain-object
+
+
+
+
+
 # 0.1.0 (2020-11-24)
 
 
