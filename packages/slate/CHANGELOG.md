@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/solidoc/iffe-react/compare/@solidoc/slate@0.2.2...@solidoc/slate@0.2.3) (2021-01-15)
+
+
+### Bug Fixes
+
+* 添加DirtyPaths获取和修改方法导出 ([d1dd839](https://github.com/solidoc/iffe-react/commit/d1dd83955b4908e7a6a94594d4cf6e8ed53aea8b))
+
+
+
+
+
 ## [0.2.2](https://github.com/solidoc/iffe-react/compare/@solidoc/slate@0.2.1...@solidoc/slate@0.2.2) (2021-01-06)
 
 **Note:** Version bump only for package @solidoc/slate

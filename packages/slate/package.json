@@ -1,6 +1,6 @@
 {
   "name": "@solidoc/slate",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "",
   "main": "dist/index.es.js",
   "module": "dist/index.es.js",
