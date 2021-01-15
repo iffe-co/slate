@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/solidoc/iffe-react/compare/@solidoc/slate@0.2.3...@solidoc/slate@0.2.4) (2021-01-15)
+
+
+### Bug Fixes
+
+* 兼容view层transfrom的apply造成的normalize问题,扩展needNormalize方法 ([9ab6d40](https://github.com/solidoc/iffe-react/commit/9ab6d406ee124b031f40029ac5a1e12544771474))
+
+
+
+
+
 ## [0.2.3](https://github.com/solidoc/iffe-react/compare/@solidoc/slate@0.2.2...@solidoc/slate@0.2.3) (2021-01-15)
 
 
