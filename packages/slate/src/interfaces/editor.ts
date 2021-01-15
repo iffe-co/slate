@@ -54,6 +54,7 @@ export interface Editor {
 
   // iffe Expand
   viewApply: (callback: () => void, changePath: Path) => void;
+  needNormalize: () => boolean; // 兼容view层transfrom的apply的normalize问题，默认true
 }
 
 export const Editor = {
@@ -713,6 +714,10 @@ export const Editor = {
     };
 
     if (!Editor.isNormalizing(editor)) {
+      return;
+    }
+
+    if (!editor.needNormalize()) {
       return;
     }
 
